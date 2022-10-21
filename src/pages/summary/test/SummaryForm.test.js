@@ -14,6 +14,7 @@ test('checkbox unchecked by default and button disabled', () => {
 });
 
 test('checking checkbox enables button and disable on second click', () => {
+  render(<SummaryForm />);
   const checkbox = screen.getByRole('checkbox', {
     name: /terms and conditions/i,
   });
