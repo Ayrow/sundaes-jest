@@ -21,5 +21,9 @@ test('displays image for each topping option from server', async () => {
   expect(toppingImages).toHaveLength(3);
 
   const altText = toppingImages.map((item) => item.alt);
-  expect(altText).toEqual(['Cherries', 'M&Ms', 'Hot fudge']);
+  expect(altText).toEqual([
+    'Cherries topping',
+    'M&Ms topping',
+    'Hot fudge topping',
+  ]);
 });
