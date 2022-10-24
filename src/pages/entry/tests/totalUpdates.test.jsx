@@ -56,3 +56,13 @@ test('update toppings subtotal when toppings change', async () => {
   expect(cherryCheckbox).not.toBeChecked();
   expect(toppingsSubtotal).toHaveTextContent('1.50');
 });
+
+describe('grand total', () => {
+  test('grand total starts at $0', () => {});
+
+  test('grand total updates properly if scoop is added first', () => {});
+
+  test('grand total updates properly if topping is added first', () => {});
+
+  test('grand total updates properly if item is removed', () => {});
+});
