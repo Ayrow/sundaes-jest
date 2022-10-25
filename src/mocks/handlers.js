@@ -18,4 +18,8 @@ export const handlers = [
       ])
     );
   }),
+
+  rest.post('http://localhost:3030/', (req, res, ctx) => {
+    return res(ctx.json([{}]));
+  }),
 ];
