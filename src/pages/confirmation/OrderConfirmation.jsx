@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import { useOrderDetails } from '../../contexts/OrderDetails';
+import { useOrderDetails } from '../../context/OrderDetails';
 
 export default function OrderConfirmation({ setOrderPhase }) {
   const { resetOrder } = useOrderDetails();
