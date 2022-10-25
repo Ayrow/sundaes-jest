@@ -1,5 +1,5 @@
 import SummaryForm from './SummaryForm';
-import { useOrderDetails } from '../../contexts/OrderDetails';
+import { useOrderDetails } from '../../context/OrderDetails';
 import { formatCurrency } from '../../utilities';
 
 export default function OrderSummary() {
