@@ -16,7 +16,7 @@ test('display alert when server error on confirmation page', async () => {
 
   render(<OrderConfirmation setOrderPhase={jest.fn()} />);
   await waitFor(async () => {
-    const alerts = await screen.findAllByRole('alert');
+    const alerts = await screen.findByRole('alert');
     expect(alerts).toBeInTheDocument();
   });
 });
