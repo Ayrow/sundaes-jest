@@ -1,4 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import {
+  queryAllByAltText,
+  queryByText,
+  render,
+  screen,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
@@ -47,7 +52,17 @@ test('order phases for happy path', async () => {
   });
   await user.click(confirmBtn);
 
+  //test that loading is in the document then disappear
   const loading = screen.getByText(/loading/i);
+  expect(loading).toBeInTheDocument();
+
+  const thankYouHeading = await screen.findByRole('heading', {
+    name: /Thank You/i,
+  });
+  expect(thankYouHeading).toBeInTheDocument();
+
+  const notLoading = screen.queryByText(/loading/i);
+  expect(notLoading).not.toBeInTheDocument();
 
   // confirm order number on confirmation page
   const orderNumber = await screen.findByText(/Your order number is /i);
