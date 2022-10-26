@@ -1,9 +1,4 @@
-import {
-  queryAllByAltText,
-  queryByText,
-  render,
-  screen,
-} from '@testing-library/react';
+import { queryByText, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
@@ -41,7 +36,7 @@ test('order phases for happy path', async () => {
   });
   expect(toppingsSummary).toHaveTextContent('1.50');
 
-  // accept terms and conditions and click button to confirm order
+  //accept terms and conditions and click button to confirm order
   const terms = await screen.findByRole('checkbox', {
     name: /terms and conditions/i,
   });
@@ -84,4 +79,48 @@ test('order phases for happy path', async () => {
   // do we need to await anything to avoid test errors?
   await screen.findByRole('spinbutton', { name: 'Vanilla' });
   await screen.findByRole('checkbox', { name: 'Cherries' });
+});
+
+test('toppings not on summary page if no toppings ordered', async () => {
+  const user = userEvent.setup();
+  render(<App />);
+
+  const vanillaInput = await screen.findByRole('spinbutton', {
+    name: /Vanilla/i,
+  });
+  await user.clear(vanillaInput);
+  await user.type(vanillaInput, '2');
+
+  const toppings = screen.queryByRole('heading', {
+    name: /Toppings: \$/i,
+  });
+  expect(toppings).not.toBeInTheDocument();
+});
+
+test('toppings not on summary page if toppings ordered then removed', async () => {
+  const user = userEvent.setup();
+  render(<App />);
+
+  const vanillaInput = await screen.findByRole('spinbutton', {
+    name: /Vanilla/i,
+  });
+  await user.clear(vanillaInput);
+  await user.type(vanillaInput, '2');
+
+  const cherryCheckbox = await screen.findByRole('checkbox', {
+    name: 'Cherries',
+  });
+  await user.click(cherryCheckbox);
+  expect(cherryCheckbox).toBeChecked();
+  const toppingTotals = screen.getByText('Toppings total: $', { exact: false });
+  expect(toppingTotals).toHaveTextContent('1.50');
+
+  await user.click(cherryCheckbox);
+  expect(cherryCheckbox).not.toBeChecked();
+  expect(toppingTotals).toHaveTextContent('0.00');
+
+  const toppings = screen.queryByRole('heading', {
+    name: /Toppings: \$/i,
+  });
+  expect(toppings).not.toBeInTheDocument();
 });
