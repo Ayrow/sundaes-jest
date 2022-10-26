@@ -47,6 +47,8 @@ test('order phases for happy path', async () => {
   });
   await user.click(confirmBtn);
 
+  const loading = screen.getByText(/loading/i);
+
   // confirm order number on confirmation page
   const orderNumber = await screen.findByText(/Your order number is /i);
   expect(orderNumber).toHaveTextContent('123455676');
